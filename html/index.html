@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypted Processing API Engine</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Encrypted Processing API Engine</h1>
+      <p>Separation-of-Duties-based Homomorphic Encryption Wrapper</p>
+    </div>
+  </header>
+
+  <section id="roadmap">
+    <div class="container">
+      <h2>Roadmap</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>Current Features</h3>
+            <p>Fully-fledged RESTful Survey Example</p>
+            <p>BGV encryption from Lattigo with fixed parameterization</p>
+            <p>A generic aggregation API</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>Milestone 1</h3>
+            <p>Testing and bug fixes</p>
+            <p>TLS support for the API</p>
+            <p>Multiple fixed parameterization options</p>
+            <p>Additional usage examples</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>Milestone 2</h3>
+            <p>Integration of CCKS</p>
+            <p>Configurable parameterization (BGV/CKKS)</p>
+            <p>Additional functionalities (mean, variance, standard deviation)</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>Milestone 3</h3>
+            <p>Configurable SIMD encoding</p>
+            <p>Introduction of output privacy mechanisms</p>
+            <p>Additional functionalities (set intersection, matching, and various distance metrics)</p>
+            <p>WASM compression</p>
+            <p>Additional usage examples</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-card">
+            <h3>Milestone 4</h3>
+            <p>DSL for non-cryptographers enabling fully automated parameterization and SIMD encoding</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="github">
+    <div class="container">
+      <h2>GitHub Repositories</h2>
+      <div class="repo-grid">
+        <a href="https://github.com/collapsinghierarchy/encproc" target="_blank" class="repo-card">
+          <h3>EncProc API Engine</h3>
+          <p>Core functionality of the API engine.</p>
+        </a>
+        <a href="https://github.com/collapsinghierarchy/encproc-decryptor" target="_blank" class="repo-card">
+          <h3>EncProc Decryptor</h3>
+          <p>Client-side components for communicating with the EncProc engine.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="info">
+    <div class="container">
+      <div class="privacy-statements">
+        <blockquote>
+          <p><em>"I have nothing to hide"</em> <span class="gray-text">(until I do, and then using E2EE makes me look suspicious).</span></p>
+        </blockquote>
+        <blockquote>
+          <p><em>"Big companies and the government already know everything about me, so why bother?"</em> <span class="gray-text">(until there’s a data breach, a political shift (USA 2025), or an employee abuses access—but it’ll never happen to me, right?).</span></p>
+        </blockquote>
+        <div>
+          <h2>What's It About?</h2>
+          <p>
+            Either you have heard one of the above statements, or you have said one yourself. Fortunately, we have moved past the era of "I have nothing to hide," at least when it comes to the mechanisms protecting our data at rest and in transit. Although overall awareness still adheres to that mindset—and amid the rise of AI agents and debates over chat control that threaten end-device privacy—the methods of end-to-end encryption remain the industrial state of the art as of 2025. However, data-in-use protection remains largely unexplored territory for the industry, which can be particularly daunting for a privacy-aware data subject—a person who uses a web service, provides their data, and cares (or would like to) about privacy. Data-in-use protections serve not only as a security measure for service providers but also as privacy-preserving measures for data subjects. Our Encrypted Processing API Engine is an attempt to foster a more privacy-aware web service industry by leveraging the concept of homomorphic encryption. It does not solve all of the privacy-preserving challenges, but we hope it will be a step in the right direction.
+          </p>
+          <p>
+            Homomorphic Encryption has existed since 1978 
+            (<a href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=c365f01d330b2211e74069120e88cff37eacbcf5">Rivest, R. L., Adleman, L., & Dertouzos, M. L.</a>, 
+            "On Data Banks and Privacy Homomorphisms"), yet it has not gained significant traction in the industry. 
+            One major reason is the misconception that these methods are inherently too inefficient for practical use.
+          </p>
+          <p>
+            When exploring research in cryptography—particularly in homomorphic encryption or outsourced secure computation—one often encounters complex challenges that researchers are eager to solve. This is intentional; research aims to push the boundaries of what is possible. However, despite these advances, the industry has made little progress in adopting privacy-preserving or data-in-use protection measures on a broad scale. It seems that everyone is waiting for the holy grail—a kind of "FHEwGGE" (Fully Homomorphic Encryption with Generally Guaranteed Efficiency) scheme that will solve all problems at once. This mindset is dangerous, as it leaves the industry vulnerable to privacy breaches and data misuse. With no clear signs of progress, the industry remains stuck in a loop of waiting for the perfect solution, even though simple, practical alternatives are already available.
+          </p>
+          <p>
+            As applied cryptology researchers collaborating with SMEs over the years, 
+            we have observed that many web services could easily be enhanced with simple 
+            privacy-preserving mechanisms, such as homomorphic encryption, without compromising efficiency, 
+            accuracy, or security. This realization was striking because:
+          </p>
+          <ul>
+            <li>Any privacy-preserving enhancement—no matter how small—is better than none.</li>
+            <li>Many straightforward use cases can already be improved with existing techniques, yet they remain unaddressed by research due to their simplicity.</li>
+          </ul>
+          <p>
+            This situation is akin to a student attending a lecture, momentarily losing focus, 
+            and then realizing the board is filled with formulas they no longer understand. 
+            In this analogy, the research community is the lecturer, and the industry is the student. 
+            To bridge this gap, we, as cryptology researchers, decided to take two steps back and 
+            reassess industry needs from a new perspective—so that we can move one step forward together.
+          </p>
+          <h3>Introducing Our Encrypted Processing API Engine</h3>
+          <p>
+            To facilitate seamless integration of privacy-preserving mechanisms into web services, 
+            we developed a simple API engine.
+          </p>
+          <p>
+            Our <strong>Encrypted Processing API Engine</strong> enables privacy-preserving and efficient data processing for applications. 
+            It leverages state-of-the-art homomorphic encryption implementations from 
+            <a href="https://github.com/tuneinsight/lattigo">Lattigo</a>, wrapped in our 
+            <a href="https://github.com/collapsinghierarchy/encproc">EncProc Engine</a>, 
+            which abstracts away cryptographic complexities. This means you don’t need cryptographic expertise 
+            to secure your web service with these privacy-enhancing mechanisms.
+          </p>
+          <p>
+            Our approach focuses on practical functionality—such as aggregation—ensuring 
+            efficiency without sacrificing accuracy while benefiting from homomorphic encryption’s privacy guarantees. 
+            Furthermore, our wrapper is built on a <strong>separation-of-duties-based single-key homomorphic encryption 
+            processing architecture</strong>. This architecture ensures a clear distinction between the 
+            <a href="https://github.com/collapsinghierarchy/encproc-decryptor">encryption/decryption</a> 
+            component and the <a href="https://github.com/collapsinghierarchy/encproc">processing</a> component.
+          </p>
+          <p>
+            We have formally proven the security of this architecture under the <strong>universal composability framework</strong>. 
+            Our results are available on 
+            <a href="https://eprint.iacr.org/2025/109.pdf">ePrint</a>.
+            We will reference a conference version of this paper in the near future. If you are a cryptology researcher or a web developer interested in collaborating with us, please reach out (encproc@gmail.com). We have a Discord server dedicated to this purpose, where we discuss and code together. Ideally, we will grow as a community and develop an engine that everyone can use and benefit from. 
+          </p>
+          <p>
+            Below you can find one of the most simple examples of how to use our API engine. More in our <a href="https://github.com/collapsinghierarchy/encproc-decryptor" target="_blank">encproc-decryptor GitHub repository</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Contribution & Decrypt Section -->
+  <section id="contribute">
+    <div class="container">
+      <h2>Contribute &amp; Decrypt Data</h2>
+      <p>
+        This section demonstrates an example of a RESTful encrypted survey form. Here, you can contribute data and decrypt aggregated results securely. You can create your own version following this approach by referring to the example code in the <a href="https://github.com/collapsinghierarchy/encproc-decryptor" target="_blank">encproc-decryptor GitHub repository</a>. For decryption you obviously need a secret key, which you can find in the repository as well. Happy Decrypting!
+      </p>
+      <div class="form-container">
+        <!-- Contribution Form Card -->
+        <div class="form-card" id="contributionFormCard">
+          <h3>Contribute Data</h3>
+          <form id="contributionForm">
+            <div class="form-group">
+              <div class="input-container">
+                <label for="priv">Privacy Preference</label>
+                <input type="number" id="priv" name="priv" placeholder="1-10" required min="1" max="10">
+              </div>
+              <div class="description">
+                <p>
+                  Privacy Preference indicates how important privacy is to you. A value of 1 indicates that privacy is not important, while a value of 10 indicates that it is very important.
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-container">
+                <label for="rating">Rating</label>
+                <input type="number" id="rating" name="rating" placeholder="1-10" required min="1" max="10">
+              </div>
+              <div class="description">
+                <p>
+                  Rating represents your evaluation of this idea, where 1 indicates a poor rating and 10 indicates an excellent rating.
+                </p>
+              </div>
+            </div>
+            <button type="submit">Submit</button>
+            <p id="contribution-error" class="error" style="display: none;">An error occurred. Please try again.</p>
+          </form>
+        </div>
+        <!-- Results Form Card -->
+        <div class="form-card" id="resultsFormCard">
+          <h3>Decrypt Snapshot Data</h3>
+          <form id="loadKeyForm">
+            <label for="secretKeyFile">Load Secret Key File</label>
+            <input type="file" id="secretKeyFile" accept=".json" required>
+            <button type="submit">Load Secret Key</button>
+          </form>
+          <div class="buttons" id="actionButtons" style="display: none;">
+            <button id="querySnapshot">Query Snapshot Data</button>
+            <button id="decryptResults">Decrypt Results</button>
+          </div>
+          <p id="results-error" class="error" style="display: none;">An error occurred. Please try again.</p>
+          <div id="resultsContainer" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Contact: <a href="mailto:encproc@gmail.com">encproc@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script src="wasm_exec.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Contribution Form Script
+    let publicKey = "";
+    const contributionID = "E9BA0A40C6";
+    fetch(`http://217.154.80.44:8080/public-key/${contributionID}`)
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch public key");
+        return response.json();
+      })
+      .then(data => {
+        publicKey = data.publicKey;
+        console.log("Public key loaded:", publicKey);
+      })
+      .catch(err => console.error("Error fetching public key:", err));
+
+    document.getElementById("contributionForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const priv = parseInt(document.getElementById("priv").value, 10);
+      const rating = parseInt(document.getElementById("rating").value, 10);
+
+      if (isNaN(priv) || isNaN(rating) || priv < 1 || priv > 10 || rating < 1 || rating > 10) {
+        alert("Please enter valid numbers between 1 and 10 for both fields.");
+        return;
+      }
+
+      if (!publicKey) {
+        alert("Public key not loaded yet. Please try again later.");
+        return;
+      }
+
+      const go = new Go();
+      const wasmModule = await WebAssembly.instantiateStreaming(
+        fetch("http://217.154.80.44:8080/static/encryption_module.wasm"),
+        go.importObject
+      );
+      go.run(wasmModule.instance);
+
+      eng_push(priv);
+      eng_push(rating);
+
+      const encryptedDataBase64 = eng_encrypt(publicKey);
+      const payload = JSON.stringify({ id: contributionID, ct: encryptedDataBase64 });
+
+      const response = await fetch(`http://217.154.80.44:8080/contribute/aggregate/${contributionID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      });
+
+      if (response.ok) {
+        alert("Data submitted successfully!");
+        document.getElementById("contributionForm").reset();
+      } else {
+        document.getElementById("contribution-error").style.display = "block";
+      }
+    });
+  </script>
+  <script>
+    // Results Form Script
+    let secretKey = null;
+    let resultsID = null;
+    let encryptedResults = null;
+    let resultsSampleSize = null;
+    const wasmFilePath = "http://217.154.80.44:8080/static/decrypt_results.wasm";
+
+    document.getElementById("loadKeyForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const fileInput = document.getElementById("secretKeyFile");
+      if (fileInput.files.length === 0) {
+        alert("Please select a file.");
+        return;
+      }
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const keyData = JSON.parse(e.target.result.trim());
+          const { id: loadedID, sk: loadedSecretKey } = keyData;
+          if (!loadedSecretKey || !/^[A-Za-z0-9+/=]+$/.test(loadedSecretKey)) {
+            throw new Error("Invalid Base64 format in the secret key.");
+          }
+          if (!loadedID) {
+            throw new Error("Missing or invalid ID in the key file.");
+          }
+          resultsID = loadedID;
+          secretKey = loadedSecretKey;
+          alert("Secret key loaded successfully!");
+          document.getElementById("actionButtons").style.display = "flex";
+        } catch (err) {
+          console.error("Error loading secret key file:", err);
+          alert("Failed to load secret key file. Please check the file format.");
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.getElementById("querySnapshot").addEventListener("click", async () => {
+      if (!resultsID) {
+        alert("Secret key not loaded. Please load the key first.");
+        return;
+      }
+      try {
+        const response = await fetch(`http://217.154.80.44:8080/snapshot/aggregate/${resultsID}`, {
+          method: "GET",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const { ct_aggr_byte_base64, id: responseID, sample_size } = data;
+          if (!ct_aggr_byte_base64 || typeof ct_aggr_byte_base64 !== "string") {
+            throw new Error("Invalid or missing 'ct_aggr_byte_base64' in the response.");
+          }
+          if (!responseID || responseID !== resultsID) {
+            throw new Error(`Response ID (${responseID}) does not match the loaded ID (${resultsID}).`);
+          }
+          if (typeof sample_size !== "number" || sample_size < 1) {
+            throw new Error("Invalid or missing 'sample_size' in the response.");
+          }
+          encryptedResults = ct_aggr_byte_base64;
+          resultsSampleSize = sample_size;
+          alert(`Snapshot data fetched successfully!\nSample Size: ${sample_size}`);
+        } else {
+          throw new Error(`Failed to fetch snapshot data. HTTP Status: ${response.status}`);
+        }
+      } catch (err) {
+        console.error("Error fetching snapshot data:", err);
+        alert(`Failed to fetch snapshot data. ${err.message}`);
+      }
+    });
+
+    document.getElementById("decryptResults").addEventListener("click", async () => {
+      if (!secretKey || !encryptedResults) {
+        alert("Ensure the secret key is loaded and snapshot data is fetched.");
+        return;
+      }
+      try {
+        const go = new Go();
+        const wasmModule = await WebAssembly.instantiateStreaming(fetch(wasmFilePath), go.importObject);
+        go.run(wasmModule.instance);
+        const decryptedResults = decrypt_result(encryptedResults, secretKey);
+        console.log("Decrypted Results:", decryptedResults);
+        alert("Decryption successful! Check the results below.");
+
+        const numbers = decryptedResults.split(',');
+        const privacyPreference = numbers[0] ? numbers[0].trim() : "N/A";
+        const rating = numbers[1] ? numbers[1].trim() : "N/A";
+
+        const resultsHtml = `
+          <h3>Aggregated Results</h3>
+          <p><strong>Sample Size:</strong> ${resultsSampleSize}</p>
+          <p>
+            <strong>Privacy Preference:</strong> ${privacyPreference}<br>
+            <em>Indicates how important privacy is to those filling out the form.</em>
+          </p>
+          <p>
+            <strong>Rating:</strong> ${rating}<br>
+            <em>Represents the evaluation of the idea. Higher is better.</em>
+          </p>
+        `;
+        const resultsContainer = document.getElementById("resultsContainer");
+        resultsContainer.style.display = "block";
+        resultsContainer.innerHTML = resultsHtml;
+      } catch (err) {
+        console.error("Error decrypting results:", err);
+        alert("Failed to decrypt the results.");
+      }
+    });
+  </script>
+</body>
+</html>
